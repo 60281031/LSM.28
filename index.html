@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>#28 이승민</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #0d0d0d;
+      --card: #161616;
+      --border: #2a2a2a;
+      --text: #ffffff;
+      --muted: #888888;
+      --accent: #247EFF;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Noto Sans KR', sans-serif;
+      min-height: 100vh;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      width: 100%;
+      height: 100svh;
+      min-height: 500px;
+      overflow: hidden;
+    }
+
+    /* 사진 자리 — 실제 투수 사진을 넣으면 여기 배경이 됩니다 */
+    .hero-img {
+      position: absolute;
+      inset: 0;
+      background: #111;
+      /* 실제 사진 예: background-image: url('hero.jpg'); */
+      background-size: cover;
+      background-position: center top;
+    }
+
+    /* 사진 없을 때 보이는 플레이스홀더 */
+    .hero-img::before {
+      content: '사진을 넣어주세요\A hero.jpg 파일을 같은 폴더에\A 넣고 아래 주석을 풀면 됩니다';
+      white-space: pre;
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #444;
+      font-size: 14px;
+      text-align: center;
+      line-height: 2;
+    }
+
+    .hero-gradient {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(0,0,0,0.1) 0%,
+        rgba(0,0,0,0.05) 40%,
+        rgba(13,13,13,0.7) 75%,
+        rgba(13,13,13,1) 100%
+      );
+    }
+
+    .hero-content {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 40px 28px 36px;
+    }
+
+    .hero-team {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .hero-season {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      margin-bottom: 2px;
+    }
+
+    .hero-role {
+      font-size: 12px;
+      font-weight: 300;
+      letter-spacing: 0.15em;
+      color: rgba(255,255,255,0.5);
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    .hero-name {
+      font-size: clamp(52px, 14vw, 88px);
+      font-weight: 900;
+      line-height: 0.9;
+      letter-spacing: -0.02em;
+    }
+
+    .hero-number {
+      color: var(--accent);
+      font-size: clamp(14px, 3.5vw, 20px);
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    /* ── STATS BAR ── */
+    .stats-bar {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .stat-cell {
+      padding: 20px 16px;
+      text-align: center;
+      border-right: 1px solid var(--border);
+    }
+    .stat-cell:last-child { border-right: none; }
+    .stat-cell:nth-child(4),
+    .stat-cell:nth-child(5),
+    .stat-cell:nth-child(6) {
+      border-top: 1px solid var(--border);
+    }
+
+    .stat-label {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .stat-value {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+
+    /* ── SECTION ── */
+    .section-header {
+      padding: 32px 28px 16px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+
+    /* ── GAME LIST ── */
+    .game-list {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .game-item {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      padding: 0 28px;
+      border-top: 1px solid var(--border);
+      text-decoration: none;
+      color: var(--text);
+      transition: background 0.15s;
+      min-height: 72px;
+    }
+    .game-item:last-child {
+      border-bottom: 1px solid var(--border);
+    }
+    .game-item:hover {
+      background: rgba(255,255,255,0.03);
+    }
+    .game-item:active {
+      background: rgba(255,255,255,0.05);
+    }
+
+    /* 번호 */
+    .game-num {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--muted);
+      width: 28px;
+      flex-shrink: 0;
+    }
+
+    /* 날짜 + 상대 */
+    .game-main {
+      flex: 1;
+      min-width: 0;
+      padding: 14px 12px 14px 0;
+    }
+
+    .game-opponent {
+      font-size: 16px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* 결과 뱃지 */
+    .result-badge {
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      flex-shrink: 0;
+      background: none;
+      border: none;
+      padding: 0;
+    }
+    .result-win  { color: #247EFF; }
+    .result-loss { color: #FF3B3B; }
+    .result-hold { color: #5BC8FF; }
+    .result-save { color: #ffffff; }
+    .result-nd   { color: #888888; }
+
+    .game-info {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 3px;
+      font-weight: 400;
+    }
+
+    /* 스탯 그룹 */
+    .game-stats {
+      display: flex;
+      gap: 18px;
+      flex-shrink: 0;
+      margin-right: 14px;
+    }
+
+    .game-stat {
+      text-align: center;
+    }
+    .game-stat-label {
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+    .game-stat-val {
+      font-size: 17px;
+      font-weight: 700;
+      margin-top: 2px;
+    }
+
+    /* 화살표 */
+    .game-arrow {
+      color: var(--muted);
+      font-size: 20px;
+      font-weight: 300;
+      flex-shrink: 0;
+      line-height: 1;
+    }
+
+    /* ── FOOTER ── */
+    .footer {
+      padding: 40px 28px;
+      text-align: center;
+      font-size: 11px;
+      color: #444;
+      letter-spacing: 0.08em;
+    }
+
+    /* ── MOBILE TWEAKS ── */
+    @media (max-width: 480px) {
+      .game-stats { gap: 14px; }
+      .game-stat-val { font-size: 15px; }
+      .hero-content { padding: 32px 20px 28px; }
+      .section-header { padding: 28px 20px 14px; }
+      .game-item { padding: 0 18px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <div class="hero-img"></div>
+  <div class="hero-gradient"></div>
+  <div class="hero-content">
+    <div class="hero-team">Samsung Lions</div>
+    <div class="hero-season">2026</div>
+    <div class="hero-role">Middle Reliever</div>
+    <div class="hero-name">
+      <span class="hero-number">#28</span>
+      이승민
+    </div>
+  </div>
+</section>
+
+<!-- ── STATS BAR ── -->
+<div class="stats-bar">
+  <div class="stat-cell">
+    <div class="stat-label">ERA</div>
+    <div class="stat-value">3.12</div>
+  </div>
+  <div class="stat-cell">
+    <div class="stat-label">성적</div>
+    <div class="stat-value">3승 2패</div>
+  </div>
+  <div class="stat-cell">
+    <div class="stat-label">이닝</div>
+    <div class="stat-value">26</div>
+  </div>
+  <div class="stat-cell">
+    <div class="stat-label">삼진</div>
+    <div class="stat-value">22</div>
+  </div>
+  <div class="stat-cell">
+    <div class="stat-label">WHIP</div>
+    <div class="stat-value">1.18</div>
+  </div>
+  <div class="stat-cell">
+    <div class="stat-label">투구수</div>
+    <div class="stat-value">412</div>
+  </div>
+</div>
+
+<!-- ── GAME LIST ── -->
+<div class="section-header">등판 기록</div>
+
+<div class="game-list">
+
+  <!-- 경기 1 -->
+  <a class="game-item" href="game-01.html">
+    <div class="game-num">05</div>
+    <div class="game-main">
+      <div class="game-opponent">
+        vs LG
+        <span class="result-badge result-win">승</span>
+      </div>
+      <div class="game-info">5.10 · 홈 · 대구</div>
+    </div>
+    <div class="game-stats">
+      <div class="game-stat">
+        <div class="game-stat-label">이닝</div>
+        <div class="game-stat-val">6</div>
+      </div>
+      <div class="game-stat">
+        <div class="game-stat-label">ERA</div>
+        <div class="game-stat-val">1.50</div>
+      </div>
+      <div class="game-stat">
+        <div class="game-stat-label">자책</div>
+        <div class="game-stat-val">1</div>
+      </div>
+    </div>
+    <div class="game-arrow">›</div>
+  </a>
+
+  <!-- 경기 2 -->
+  <a class="game-item" href="game-02.html">
+    <div class="game-num">04</div>
+    <div class="game-main">
+      <div class="game-opponent">
+        vs 두산
+        <span class="result-badge result-hold">홀드</span>
+      </div>
+      <div class="game-info">5.03 · 원정 · 잠실</div>
+    </div>
+    <div class="game-stats">
+      <div class="game-stat">
+        <div class="game-stat-label">이닝</div>
+        <div class="game-stat-val">3⅔</div>
+      </div>
+      <div class="game-stat">
+        <div class="game-stat-label">ERA</div>
+        <div class="game-stat-val">4.91</div>
+      </div>
+      <div class="game-stat">
+        <div class="game-stat-label">자책</div>
+        <div class="game-stat-val">2</div>
+      </div>
+    </div>
+    <div class="game-arrow">›</div>
+  </a>
+
+  <!-- 경기 3 -->
+  <a class="game-item" href="game-03.html">
+    <div class="game-num">03</div>
+    <div class="game-main">
+      <div class="game-opponent">
+        vs KT
+        <span class="result-badge result-win">승</span>
+      </div>
+      <div class="game-info">4.26 · 홈 · 대구</div>
+    </div>
+    <div class="game-stats">
+      <div class="game-stat">
+        <div class="game-stat-label">이닝</div>
+        <div class="game-stat-val">7</div>
+      </div>
+      <div class="game-stat">
+        <div class="game-stat-label">ERA</div>
+        <div class="game-stat-val">0.00</div>
+      </div>
+      <div class="game-stat">
+        <div class="game-stat-label">자책</div>
+        <div class="game-stat-val">0</div>
+      </div>
+    </div>
+    <div class="game-arrow">›</div>
+  </a>
+
+  <!-- 경기 4 -->
+  <a class="game-item" href="game-04.html">
+    <div class="game-num">02</div>
+    <div class="game-main">
+      <div class="game-opponent">
+        vs 롯데
+        <span class="result-badge result-loss">패</span>
+      </div>
+      <div class="game-info">4.19 · 원정 · 사직</div>
+    </div>
+    <div class="game-stats">
+      <div class="game-stat">
+        <div class="game-stat-label">이닝</div>
+        <div class="game-stat-val">4⅓</div>
+      </div>
+      <div class="game-stat">
+        <div class="game-stat-label">ERA</div>
+        <div class="game-stat-val">6.23</div>
+      </div>
+      <div class="game-stat">
+        <div class="game-stat-label">자책</div>
+        <div class="game-stat-val">3</div>
+      </div>
+    </div>
+    <div class="game-arrow">›</div>
+  </a>
+
+  <!-- 경기 5 -->
+  <a class="game-item" href="game-05.html">
+    <div class="game-num">01</div>
+    <div class="game-main">
+      <div class="game-opponent">
+        vs NC
+        <span class="result-badge result-win">승</span>
+      </div>
+      <div class="game-info">4.13 · 홈 · 대구</div>
+    </div>
+    <div class="game-stats">
+      <div class="game-stat">
+        <div class="game-stat-label">이닝</div>
+        <div class="game-stat-val">6⅓</div>
+      </div>
+      <div class="game-stat">
+        <div class="game-stat-label">ERA</div>
+        <div class="game-stat-val">2.84</div>
+      </div>
+      <div class="game-stat">
+        <div class="game-stat-label">자책</div>
+        <div class="game-stat-val">2</div>
+      </div>
+    </div>
+    <div class="game-arrow">›</div>
+  </a>
+
+</div>
+
+<div class="footer">
+  Samsung Lions · #28 이승민 · 2026
+</div>
+
+</body>
+</html>
