@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>#28 이승민 — vs LG</title>
+  <title>#28 이승민 — vs 롯데 (03.29)</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap');
 
@@ -11,11 +11,10 @@
 
     :root {
       --bg: #0d0d0d;
-      --card: #161616;
       --border: #2a2a2a;
       --text: #ffffff;
       --muted: #888888;
-      --accent: #c00020;
+      --accent: #247EFF;
     }
 
     body {
@@ -38,7 +37,6 @@
       backdrop-filter: blur(12px);
       z-index: 50;
     }
-
     .back-btn {
       display: flex;
       align-items: center;
@@ -51,7 +49,6 @@
     }
     .back-btn:hover { color: var(--text); }
     .back-btn svg { width: 16px; height: 16px; }
-
     .topbar-title {
       font-size: 13px;
       font-weight: 600;
@@ -64,14 +61,12 @@
       padding: 28px 24px 24px;
       border-bottom: 1px solid var(--border);
     }
-
     .game-meta {
       font-size: 12px;
       color: var(--muted);
       letter-spacing: 0.08em;
       margin-bottom: 10px;
     }
-
     .game-title {
       font-size: 36px;
       font-weight: 900;
@@ -80,27 +75,17 @@
       align-items: center;
       gap: 12px;
     }
-
     .result-chip {
       font-size: 20px;
       font-weight: 700;
-      letter-spacing: 0.02em;
-      background: none;
-      border: none;
-      padding: 0;
     }
-    .chip-win  { color: #247EFF; }
-    .chip-loss { color: #FF3B3B; }
-    .chip-hold { color: #5BC8FF; }
-    .chip-save { color: #ffffff; }
-    .chip-nd   { color: #888888; }
+    .chip-nd { color: #888888; }
 
     .game-stats-row {
       display: flex;
       gap: 28px;
       margin-top: 18px;
     }
-    .gs-item { }
     .gs-label {
       font-size: 9px;
       font-weight: 600;
@@ -109,10 +94,7 @@
       text-transform: uppercase;
       margin-bottom: 4px;
     }
-    .gs-val {
-      font-size: 20px;
-      font-weight: 700;
-    }
+    .gs-val { font-size: 20px; font-weight: 700; }
 
     /* ── SECTION LABEL ── */
     .section-label {
@@ -125,16 +107,13 @@
     }
 
     /* ── BATTER LIST ── */
-    .batter-list {
-      display: flex;
-      flex-direction: column;
-    }
+    .batter-list { display: flex; flex-direction: column; }
 
     .batter-item {
       display: flex;
       align-items: center;
       padding: 0 24px;
-      min-height: 60px;
+      min-height: 64px;
       border-top: 1px solid var(--border);
       cursor: pointer;
       transition: background 0.12s;
@@ -154,28 +133,16 @@
       width: 22px;
       flex-shrink: 0;
     }
-
-    .batter-info {
-      flex: 1;
-      padding: 12px 12px 12px 8px;
-    }
+    .batter-info { flex: 1; padding: 14px 12px 14px 8px; }
     .batter-name-row {
-      font-size: 15px;
+      font-size: 16px;
       font-weight: 700;
       display: flex;
       align-items: center;
       gap: 8px;
     }
-    .batter-pos {
-      font-size: 11px;
-      color: var(--muted);
-      font-weight: 400;
-    }
-    .batter-result-text {
-      font-size: 12px;
-      color: var(--muted);
-      margin-top: 2px;
-    }
+    .batter-pos { font-size: 11px; color: var(--muted); font-weight: 400; }
+    .batter-result-text { font-size: 12px; color: var(--muted); margin-top: 3px; }
 
     .pitch-count-badge {
       font-size: 11px;
@@ -183,7 +150,6 @@
       margin-right: 12px;
       flex-shrink: 0;
     }
-
     .batter-arrow {
       color: var(--muted);
       font-size: 20px;
@@ -200,227 +166,76 @@
       display: none;
       background: #111;
       border-bottom: 1px solid var(--border);
-      padding: 24px;
+      padding: 4px 24px 16px 54px;
       animation: expandDown 0.2s ease;
     }
     .pitch-panel.open { display: block; }
-
     @keyframes expandDown {
-      from { opacity: 0; transform: translateY(-6px); }
+      from { opacity: 0; transform: translateY(-4px); }
       to   { opacity: 1; transform: translateY(0); }
     }
 
-    .pitch-panel-inner {
-      display: flex;
-      gap: 28px;
-      align-items: flex-start;
-      flex-wrap: wrap;
-    }
-
-    /* ── ABS ZONE ── */
-    .abs-wrapper {
-      flex-shrink: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 14px;
-    }
-
-    .abs-title {
-      font-size: 9px;
-      font-weight: 600;
-      letter-spacing: 0.2em;
-      color: var(--muted);
-      text-transform: uppercase;
-    }
-
-    /* 전체 시각화 영역 */
-    .abs-visual {
-      position: relative;
-      width: 200px;
-      height: 230px;
-    }
-
-    /* 스트라이크 존 박스 */
-    .strike-zone {
-      position: absolute;
-      left: 50%;
-      top: 20px;
-      transform: translateX(-50%);
-      width: 120px;
-      height: 140px;
-      border: 1.5px solid rgba(255,255,255,0.3);
-      background: rgba(255,255,255,0.03);
-    }
-
-    /* 3×3 내부 격자선 */
-    .zone-grid-h1 {
-      position: absolute;
-      left: 0; right: 0;
-      top: 33.33%;
-      height: 1px;
-      background: rgba(255,255,255,0.12);
-    }
-    .zone-grid-h2 {
-      position: absolute;
-      left: 0; right: 0;
-      top: 66.66%;
-      height: 1px;
-      background: rgba(255,255,255,0.12);
-    }
-    .zone-grid-v1 {
-      position: absolute;
-      top: 0; bottom: 0;
-      left: 33.33%;
-      width: 1px;
-      background: rgba(255,255,255,0.12);
-    }
-    .zone-grid-v2 {
-      position: absolute;
-      top: 0; bottom: 0;
-      left: 66.66%;
-      width: 1px;
-      background: rgba(255,255,255,0.12);
-    }
-
-    /* 홈플레이트 */
-    .home-plate {
-      position: absolute;
-      left: 50%;
-      top: 172px;
-      transform: translateX(-50%);
-      width: 68px;
-      height: 46px;
-    }
-
-    /* 투구 점 */
-    .pitch-dot {
-      position: absolute;
-      width: 24px;
-      height: 24px;
-      border-radius: 50%;
-      transform: translate(-50%, -50%);
+    /* ── PITCH ROWS ── */
+    .pitch-row {
       display: flex;
       align-items: center;
-      justify-content: center;
-      font-size: 10px;
-      font-weight: 700;
-      cursor: pointer;
-      z-index: 10;
-      transition: transform 0.1s;
-      border: 1.5px solid rgba(0,0,0,0.3);
-      box-shadow: 0 1px 4px rgba(0,0,0,0.5);
-    }
-    .pitch-dot:hover { transform: translate(-50%, -50%) scale(1.25); }
-
-    /* 결과별 색상 */
-    .dot-strike  { background: #1e6ad4; color: #fff; }  /* 스트라이크 — 파랑 */
-    .dot-ball    { background: #1f8c42; color: #fff; }  /* 볼 — 초록 */
-    .dot-foul    { background: #b07a10; color: #fff; }  /* 파울 — 노랑 */
-    .dot-contact { background: #c00020; color: #fff; }  /* 타격 — 빨강 */
-
-    /* 범례 */
-    .abs-legend {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 6px 14px;
-    }
-    .legend-row {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 10px;
-      color: var(--muted);
-      font-weight: 500;
-    }
-    .legend-dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      flex-shrink: 0;
-    }
-
-    /* ── PITCH TABLE ── */
-    .pitch-table-wrap {
-      flex: 1;
-      min-width: 200px;
-      overflow-x: auto;
-    }
-
-    .pitch-table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-
-    .pitch-table th {
-      font-size: 9px;
-      font-weight: 600;
-      letter-spacing: 0.18em;
-      color: var(--muted);
-      text-transform: uppercase;
-      padding: 0 12px 10px 0;
-      text-align: left;
-      border-bottom: 1px solid var(--border);
-      white-space: nowrap;
-    }
-
-    .pitch-table td {
-      padding: 10px 12px 10px 0;
+      gap: 0;
+      padding: 10px 0;
       border-bottom: 1px solid rgba(255,255,255,0.04);
-      vertical-align: middle;
-      font-size: 14px;
     }
-    .pitch-table tr:last-child td { border-bottom: none; }
-    .pitch-table tr:hover td { opacity: 0.75; }
+    .pitch-row:last-child { border-bottom: none; }
 
-    .td-num {
-      font-size: 12px;
-      color: var(--muted);
+    .pitch-num {
+      font-size: 11px;
       font-weight: 700;
-      width: 24px;
+      color: var(--muted);
+      width: 28px;
+      flex-shrink: 0;
     }
-    .td-type {
+    .pitch-type {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+      width: 80px;
+      flex-shrink: 0;
+    }
+    .pitch-speed {
+      font-size: 14px;
       font-weight: 700;
       color: var(--text);
+      width: 76px;
+      flex-shrink: 0;
     }
-    .td-speed {
-      font-weight: 700;
-      color: #fff;
-    }
-    .td-speed span {
+    .pitch-speed span {
       font-size: 10px;
       color: var(--muted);
       font-weight: 400;
       margin-left: 2px;
     }
-    .td-result { color: var(--muted); }
-    .td-result.strike { color: #5b9aff; }
-    .td-result.ball   { color: #5fdd8c; }
-    .td-result.foul   { color: #e8c84b; }
-    .td-result.contact { color: #ff7a8a; }
 
-    /* ── TOOLTIP ── */
-    .pitch-dot[data-tip]:hover::after {
-      content: attr(data-tip);
-      position: absolute;
-      bottom: 28px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: #222;
-      color: #fff;
-      font-size: 10px;
-      padding: 4px 8px;
-      border-radius: 4px;
-      white-space: nowrap;
-      pointer-events: none;
-      z-index: 99;
+    /* 투구 구분자 */
+    .pitch-sep {
+      font-size: 11px;
+      color: #3a3a3a;
+      margin-right: 10px;
     }
 
+    .pitch-result {
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .r-strike  { color: #f0c040; }
+    .r-ball    { color: #5fdd8c; }
+    .r-foul    { color: #f0a040; }
+    .r-contact { color: #5b9aff; }
+
+    /* ── FOOTER ── */
+    .page-bottom { height: 60px; }
+
     @media (max-width: 480px) {
-      .pitch-panel-inner { flex-direction: column; }
-      .abs-visual { width: 180px; height: 210px; }
-      .strike-zone { width: 108px; height: 126px; }
-      .home-plate { top: 156px; }
+      .pitch-panel { padding-left: 36px; }
+      .pitch-type { width: 68px; }
+      .pitch-speed { width: 64px; }
     }
   </style>
 </head>
@@ -439,424 +254,212 @@
 
 <!-- GAME HEADER -->
 <div class="game-header">
-  <div class="game-meta">2026. 5. 10. · 홈 · 대구삼성라이온즈파크 · 14:00</div>
+  <div class="game-meta">2026. 3. 29. · 홈 · 대구삼성라이온즈파크</div>
   <div class="game-title">
-    vs LG
-    <span class="result-chip chip-win">승</span>
+    vs 롯데
+    <span class="result-chip chip-nd">ND</span>
   </div>
   <div class="game-stats-row">
     <div class="gs-item">
       <div class="gs-label">이닝</div>
-      <div class="gs-val">6</div>
+      <div class="gs-val">1⅓</div>
     </div>
     <div class="gs-item">
       <div class="gs-label">자책점</div>
-      <div class="gs-val">1</div>
-    </div>
-    <div class="gs-item">
-      <div class="gs-label">투구수</div>
-      <div class="gs-val">88</div>
+      <div class="gs-val">0</div>
     </div>
     <div class="gs-item">
       <div class="gs-label">ERA</div>
-      <div class="gs-val">1.50</div>
+      <div class="gs-val">0.00</div>
     </div>
   </div>
 </div>
 
-<!-- BATTER LIST SECTION LABEL -->
-<div class="section-label">상대 타자</div>
-
 <!-- BATTER LIST -->
-<div class="batter-list" id="batterList">
+<div class="section-label">상대 타자</div>
+<div class="batter-list">
 
-  <!--
-    ================================================================
-    타자 항목 구조:
-      data-batter-id : 고유 ID (아무 숫자/문자 OK)
-      .batter-order  : 타순
-      .batter-name-row : 이름 + 포지션
-      .batter-result-text : 결과 요약
-      .pitch-count-badge : 투구 수
-    ================================================================
-  -->
-
-  <!-- 타자 1: 홍창기 -->
-  <div class="batter-item" data-batter-id="b1" onclick="toggleBatter(this)">
-    <div class="batter-order">1</div>
-    <div class="batter-info">
-      <div class="batter-name-row">
-        홍창기
-        <span class="batter-pos">좌익수</span>
-      </div>
-      <div class="batter-result-text">삼진</div>
-    </div>
-    <div class="pitch-count-badge">4구</div>
-    <div class="batter-arrow">›</div>
-  </div>
-
-  <!-- 투구 패널: 홍창기 -->
-  <div class="pitch-panel" id="panel-b1">
-    <div class="pitch-panel-inner">
-      <!-- ABS 존 -->
-      <div class="abs-wrapper">
-        <div class="abs-title">투구 위치</div>
-        <div class="abs-visual">
-          <div class="strike-zone" id="zone-b1">
-            <div class="zone-grid-h1"></div>
-            <div class="zone-grid-h2"></div>
-            <div class="zone-grid-v1"></div>
-            <div class="zone-grid-v2"></div>
-            <!--
-              투구 점 위치 설명:
-                left: 0% = 존 왼쪽 끝, 100% = 존 오른쪽 끝
-                top:  0% = 존 위쪽 끝, 100% = 존 아래쪽 끝
-                존 안(스트라이크존): left 10~90%, top 10~90%
-                존 바깥(볼): left 또는 top이 0 이하거나 100 이상 (아래 예시 참고)
-
-              data-tip : 점에 마우스 올리면 나오는 설명
-              dot-strike : 스트라이크 (파랑)
-              dot-ball   : 볼 (초록)
-              dot-foul   : 파울 (노랑)
-              dot-contact: 타격 (빨강)
-            -->
-
-            <!-- 1구: 포심 / 스트라이크 / 존 중앙 상단 -->
-            <div class="pitch-dot dot-strike"
-                 style="left:50%; top:25%"
-                 data-tip="1구 포심 148km/h">1</div>
-
-            <!-- 2구: 슬라이더 / 볼 / 바깥쪽 -->
-            <div class="pitch-dot dot-ball"
-                 style="left:85%; top:55%"
-                 data-tip="2구 슬라이더 132km/h">2</div>
-
-            <!-- 3구: 포심 / 스트라이크 / 중앙 -->
-            <div class="pitch-dot dot-strike"
-                 style="left:45%; top:50%"
-                 data-tip="3구 포심 150km/h">3</div>
-
-            <!-- 4구: 체인지업 / 삼진 (스트라이크) / 낮은 바깥 -->
-            <div class="pitch-dot dot-strike"
-                 style="left:70%; top:80%"
-                 data-tip="4구 체인지업 124km/h">4</div>
-
-          </div>
-          <!-- 홈플레이트 SVG -->
-          <svg class="home-plate" viewBox="0 0 68 46" fill="none">
-            <polygon points="4,0 64,0 64,28 34,46 4,28"
-                     fill="rgba(255,255,255,0.05)"
-                     stroke="rgba(255,255,255,0.25)"
-                     stroke-width="1.5"/>
-          </svg>
-        </div>
-        <!-- 범례 -->
-        <div class="abs-legend">
-          <div class="legend-row"><div class="legend-dot" style="background:#1e6ad4"></div>스트라이크</div>
-          <div class="legend-row"><div class="legend-dot" style="background:#1f8c42"></div>볼</div>
-          <div class="legend-row"><div class="legend-dot" style="background:#b07a10"></div>파울</div>
-          <div class="legend-row"><div class="legend-dot" style="background:#c00020"></div>타격</div>
-        </div>
-      </div>
-
-      <!-- 투구 테이블 -->
-      <div class="pitch-table-wrap">
-        <table class="pitch-table">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>구종</th>
-              <th>구속</th>
-              <th>결과</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td class="td-num">1</td>
-              <td class="td-type">포심</td>
-              <td class="td-speed">148<span>km/h</span></td>
-              <td class="td-result strike">스트라이크</td>
-            </tr>
-            <tr>
-              <td class="td-num">2</td>
-              <td class="td-type">슬라이더</td>
-              <td class="td-speed">132<span>km/h</span></td>
-              <td class="td-result ball">볼</td>
-            </tr>
-            <tr>
-              <td class="td-num">3</td>
-              <td class="td-type">포심</td>
-              <td class="td-speed">150<span>km/h</span></td>
-              <td class="td-result strike">스트라이크</td>
-            </tr>
-            <tr>
-              <td class="td-num">4</td>
-              <td class="td-type">체인지업</td>
-              <td class="td-speed">124<span>km/h</span></td>
-              <td class="td-result strike">삼진</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div><!-- /panel-b1 -->
-
-  <!-- ──────────── 타자 2: 오스틴 ──────────── -->
-  <div class="batter-item" data-batter-id="b2" onclick="toggleBatter(this)">
+  <!-- ════ 타자 1: 윤동희 ════ -->
+  <div class="batter-item" data-id="b1" onclick="toggle(this)">
     <div class="batter-order">3</div>
     <div class="batter-info">
-      <div class="batter-name-row">
-        오스틴
-        <span class="batter-pos">1루수</span>
-      </div>
-      <div class="batter-result-text">땅볼</div>
+      <div class="batter-name-row">윤동희 <span class="batter-pos">우익수</span></div>
+      <div class="batter-result-text">헛스윙 삼진</div>
     </div>
     <div class="pitch-count-badge">4구</div>
     <div class="batter-arrow">›</div>
   </div>
-
-  <div class="pitch-panel" id="panel-b2">
-    <div class="pitch-panel-inner">
-      <div class="abs-wrapper">
-        <div class="abs-title">투구 위치</div>
-        <div class="abs-visual">
-          <div class="strike-zone" id="zone-b2">
-            <div class="zone-grid-h1"></div>
-            <div class="zone-grid-h2"></div>
-            <div class="zone-grid-v1"></div>
-            <div class="zone-grid-v2"></div>
-
-            <div class="pitch-dot dot-strike" style="left:55%; top:30%" data-tip="1구 포심 147km/h">1</div>
-            <div class="pitch-dot dot-ball"   style="left:90%; top:45%" data-tip="2구 슬라이더 131km/h">2</div>
-            <div class="pitch-dot dot-foul"   style="left:50%; top:28%" data-tip="3구 포심 149km/h">3</div>
-            <div class="pitch-dot dot-contact" style="left:50%; top:85%" data-tip="4구 싱커 143km/h">4</div>
-
-          </div>
-          <svg class="home-plate" viewBox="0 0 68 46" fill="none">
-            <polygon points="4,0 64,0 64,28 34,46 4,28"
-                     fill="rgba(255,255,255,0.05)"
-                     stroke="rgba(255,255,255,0.25)" stroke-width="1.5"/>
-          </svg>
-        </div>
-        <div class="abs-legend">
-          <div class="legend-row"><div class="legend-dot" style="background:#1e6ad4"></div>스트라이크</div>
-          <div class="legend-row"><div class="legend-dot" style="background:#1f8c42"></div>볼</div>
-          <div class="legend-row"><div class="legend-dot" style="background:#b07a10"></div>파울</div>
-          <div class="legend-row"><div class="legend-dot" style="background:#c00020"></div>타격</div>
-        </div>
-      </div>
-      <div class="pitch-table-wrap">
-        <table class="pitch-table">
-          <thead>
-            <tr><th>#</th><th>구종</th><th>구속</th><th>결과</th></tr>
-          </thead>
-          <tbody>
-            <tr><td class="td-num">1</td><td class="td-type">포심</td><td class="td-speed">147<span>km/h</span></td><td class="td-result strike">스트라이크</td></tr>
-            <tr><td class="td-num">2</td><td class="td-type">슬라이더</td><td class="td-speed">131<span>km/h</span></td><td class="td-result ball">볼</td></tr>
-            <tr><td class="td-num">3</td><td class="td-type">포심</td><td class="td-speed">149<span>km/h</span></td><td class="td-result foul">파울</td></tr>
-            <tr><td class="td-num">4</td><td class="td-type">싱커</td><td class="td-speed">143<span>km/h</span></td><td class="td-result contact">땅볼</td></tr>
-          </tbody>
-        </table>
-      </div>
+  <div class="pitch-panel" id="panel-b1">
+    <div class="pitch-row">
+      <div class="pitch-num">1구</div>
+      <div class="pitch-type">직구</div>
+      <div class="pitch-speed">142<span>km/h</span></div>
+      <div class="pitch-sep">•</div>
+      <div class="pitch-result r-strike">스트라이크</div>
+    </div>
+    <div class="pitch-row">
+      <div class="pitch-num">2구</div>
+      <div class="pitch-type">커브</div>
+      <div class="pitch-speed">124<span>km/h</span></div>
+      <div class="pitch-sep">•</div>
+      <div class="pitch-result r-foul">파울</div>
+    </div>
+    <div class="pitch-row">
+      <div class="pitch-num">3구</div>
+      <div class="pitch-type">직구</div>
+      <div class="pitch-speed">144<span>km/h</span></div>
+      <div class="pitch-sep">•</div>
+      <div class="pitch-result r-ball">볼</div>
+    </div>
+    <div class="pitch-row">
+      <div class="pitch-num">4구</div>
+      <div class="pitch-type">직구</div>
+      <div class="pitch-speed">142<span>km/h</span></div>
+      <div class="pitch-sep">•</div>
+      <div class="pitch-result r-strike">헛스윙 삼진</div>
     </div>
   </div>
 
-  <!-- ──────────── 타자 3: 문보경 ──────────── -->
-  <div class="batter-item" data-batter-id="b3" onclick="toggleBatter(this)">
+  <!-- ════ 타자 2: 전준우 ════ -->
+  <div class="batter-item" data-id="b2" onclick="toggle(this)">
     <div class="batter-order">4</div>
     <div class="batter-info">
-      <div class="batter-name-row">
-        문보경
-        <span class="batter-pos">3루수</span>
-      </div>
-      <div class="batter-result-text">안타</div>
+      <div class="batter-name-row">전준우 <span class="batter-pos">지명타자</span></div>
+      <div class="batter-result-text">중견수 플라이 아웃</div>
+    </div>
+    <div class="pitch-count-badge">7구</div>
+    <div class="batter-arrow">›</div>
+  </div>
+  <div class="pitch-panel" id="panel-b2">
+    <div class="pitch-row">
+      <div class="pitch-num">1구</div>
+      <div class="pitch-type">체인지업</div>
+      <div class="pitch-speed">125<span>km/h</span></div>
+      <div class="pitch-sep">•</div>
+      <div class="pitch-result r-foul">파울</div>
+    </div>
+    <div class="pitch-row">
+      <div class="pitch-num">2구</div>
+      <div class="pitch-type">슬라이더</div>
+      <div class="pitch-speed">132<span>km/h</span></div>
+      <div class="pitch-sep">•</div>
+      <div class="pitch-result r-foul">파울</div>
+    </div>
+    <div class="pitch-row">
+      <div class="pitch-num">3구</div>
+      <div class="pitch-type">직구</div>
+      <div class="pitch-speed">141<span>km/h</span></div>
+      <div class="pitch-sep">•</div>
+      <div class="pitch-result r-ball">볼</div>
+    </div>
+    <div class="pitch-row">
+      <div class="pitch-num">4구</div>
+      <div class="pitch-type">체인지업</div>
+      <div class="pitch-speed">125<span>km/h</span></div>
+      <div class="pitch-sep">•</div>
+      <div class="pitch-result r-ball">볼</div>
+    </div>
+    <div class="pitch-row">
+      <div class="pitch-num">5구</div>
+      <div class="pitch-type">체인지업</div>
+      <div class="pitch-speed">126<span>km/h</span></div>
+      <div class="pitch-sep">•</div>
+      <div class="pitch-result r-foul">파울</div>
+    </div>
+    <div class="pitch-row">
+      <div class="pitch-num">6구</div>
+      <div class="pitch-type">직구</div>
+      <div class="pitch-speed">141<span>km/h</span></div>
+      <div class="pitch-sep">•</div>
+      <div class="pitch-result r-ball">볼</div>
+    </div>
+    <div class="pitch-row">
+      <div class="pitch-num">7구</div>
+      <div class="pitch-type">체인지업</div>
+      <div class="pitch-speed">124<span>km/h</span></div>
+      <div class="pitch-sep">•</div>
+      <div class="pitch-result r-contact">중견수 플라이 아웃</div>
+    </div>
+  </div>
+
+  <!-- ════ 타자 3: 노진혁 ════ -->
+  <div class="batter-item" data-id="b3" onclick="toggle(this)">
+    <div class="batter-order">5</div>
+    <div class="batter-info">
+      <div class="batter-name-row">노진혁 <span class="batter-pos">1루수</span></div>
+      <div class="batter-result-text">헛스윙 삼진</div>
     </div>
     <div class="pitch-count-badge">4구</div>
     <div class="batter-arrow">›</div>
   </div>
-
   <div class="pitch-panel" id="panel-b3">
-    <div class="pitch-panel-inner">
-      <div class="abs-wrapper">
-        <div class="abs-title">투구 위치</div>
-        <div class="abs-visual">
-          <div class="strike-zone" id="zone-b3">
-            <div class="zone-grid-h1"></div>
-            <div class="zone-grid-h2"></div>
-            <div class="zone-grid-v1"></div>
-            <div class="zone-grid-v2"></div>
-
-            <div class="pitch-dot dot-strike" style="left:45%; top:25%" data-tip="1구 포심 146km/h">1</div>
-            <div class="pitch-dot dot-ball"   style="left:15%; top:60%" data-tip="2구 체인지업 125km/h">2</div>
-            <div class="pitch-dot dot-foul"   style="left:78%; top:50%" data-tip="3구 슬라이더 130km/h">3</div>
-            <div class="pitch-dot dot-contact" style="left:52%; top:40%" data-tip="4구 포심 150km/h">4</div>
-
-          </div>
-          <svg class="home-plate" viewBox="0 0 68 46" fill="none">
-            <polygon points="4,0 64,0 64,28 34,46 4,28"
-                     fill="rgba(255,255,255,0.05)"
-                     stroke="rgba(255,255,255,0.25)" stroke-width="1.5"/>
-          </svg>
-        </div>
-        <div class="abs-legend">
-          <div class="legend-row"><div class="legend-dot" style="background:#1e6ad4"></div>스트라이크</div>
-          <div class="legend-row"><div class="legend-dot" style="background:#1f8c42"></div>볼</div>
-          <div class="legend-row"><div class="legend-dot" style="background:#b07a10"></div>파울</div>
-          <div class="legend-row"><div class="legend-dot" style="background:#c00020"></div>타격</div>
-        </div>
-      </div>
-      <div class="pitch-table-wrap">
-        <table class="pitch-table">
-          <thead>
-            <tr><th>#</th><th>구종</th><th>구속</th><th>결과</th></tr>
-          </thead>
-          <tbody>
-            <tr><td class="td-num">1</td><td class="td-type">포심</td><td class="td-speed">146<span>km/h</span></td><td class="td-result strike">스트라이크</td></tr>
-            <tr><td class="td-num">2</td><td class="td-type">체인지업</td><td class="td-speed">125<span>km/h</span></td><td class="td-result ball">볼</td></tr>
-            <tr><td class="td-num">3</td><td class="td-type">슬라이더</td><td class="td-speed">130<span>km/h</span></td><td class="td-result foul">파울</td></tr>
-            <tr><td class="td-num">4</td><td class="td-type">포심</td><td class="td-speed">150<span>km/h</span></td><td class="td-result contact">안타</td></tr>
-          </tbody>
-        </table>
-      </div>
+    <div class="pitch-row">
+      <div class="pitch-num">1구</div>
+      <div class="pitch-type">슬라이더</div>
+      <div class="pitch-speed">130<span>km/h</span></div>
+      <div class="pitch-sep">•</div>
+      <div class="pitch-result r-strike">스트라이크</div>
+    </div>
+    <div class="pitch-row">
+      <div class="pitch-num">2구</div>
+      <div class="pitch-type">슬라이더</div>
+      <div class="pitch-speed">131<span>km/h</span></div>
+      <div class="pitch-sep">•</div>
+      <div class="pitch-result r-strike">스트라이크</div>
+    </div>
+    <div class="pitch-row">
+      <div class="pitch-num">3구</div>
+      <div class="pitch-type">슬라이더</div>
+      <div class="pitch-speed">132<span>km/h</span></div>
+      <div class="pitch-sep">•</div>
+      <div class="pitch-result r-ball">볼</div>
+    </div>
+    <div class="pitch-row">
+      <div class="pitch-num">4구</div>
+      <div class="pitch-type">직구</div>
+      <div class="pitch-speed">144<span>km/h</span></div>
+      <div class="pitch-sep">•</div>
+      <div class="pitch-result r-strike">헛스윙 삼진</div>
     </div>
   </div>
 
-  <!-- ──────────── 타자 4: 박동원 ──────────── -->
-  <div class="batter-item" data-batter-id="b4" onclick="toggleBatter(this)">
-    <div class="batter-order">5</div>
+  <!-- ════ 타자 4: 유강남 ════ -->
+  <div class="batter-item" data-id="b4" onclick="toggle(this)">
+    <div class="batter-order">6</div>
     <div class="batter-info">
-      <div class="batter-name-row">
-        박동원
-        <span class="batter-pos">포수</span>
-      </div>
-      <div class="batter-result-text">볼넷</div>
+      <div class="batter-name-row">유강남 <span class="batter-pos">포수</span></div>
+      <div class="batter-result-text">유격수 땅볼 아웃</div>
     </div>
-    <div class="pitch-count-badge">5구</div>
+    <div class="pitch-count-badge">2구</div>
     <div class="batter-arrow">›</div>
   </div>
-
   <div class="pitch-panel" id="panel-b4">
-    <div class="pitch-panel-inner">
-      <div class="abs-wrapper">
-        <div class="abs-title">투구 위치</div>
-        <div class="abs-visual">
-          <div class="strike-zone" id="zone-b4">
-            <div class="zone-grid-h1"></div>
-            <div class="zone-grid-h2"></div>
-            <div class="zone-grid-v1"></div>
-            <div class="zone-grid-v2"></div>
-
-            <div class="pitch-dot dot-ball"   style="left:10%; top:35%" data-tip="1구 포심 145km/h">1</div>
-            <div class="pitch-dot dot-ball"   style="left:90%; top:55%" data-tip="2구 슬라이더 129km/h">2</div>
-            <div class="pitch-dot dot-strike" style="left:50%; top:48%" data-tip="3구 포심 148km/h">3</div>
-            <div class="pitch-dot dot-ball"   style="left:8%;  top:65%" data-tip="4구 체인지업 122km/h">4</div>
-            <div class="pitch-dot dot-ball"   style="left:95%; top:30%" data-tip="5구 포심 147km/h">5</div>
-
-          </div>
-          <svg class="home-plate" viewBox="0 0 68 46" fill="none">
-            <polygon points="4,0 64,0 64,28 34,46 4,28"
-                     fill="rgba(255,255,255,0.05)"
-                     stroke="rgba(255,255,255,0.25)" stroke-width="1.5"/>
-          </svg>
-        </div>
-        <div class="abs-legend">
-          <div class="legend-row"><div class="legend-dot" style="background:#1e6ad4"></div>스트라이크</div>
-          <div class="legend-row"><div class="legend-dot" style="background:#1f8c42"></div>볼</div>
-          <div class="legend-row"><div class="legend-dot" style="background:#b07a10"></div>파울</div>
-          <div class="legend-row"><div class="legend-dot" style="background:#c00020"></div>타격</div>
-        </div>
-      </div>
-      <div class="pitch-table-wrap">
-        <table class="pitch-table">
-          <thead>
-            <tr><th>#</th><th>구종</th><th>구속</th><th>결과</th></tr>
-          </thead>
-          <tbody>
-            <tr><td class="td-num">1</td><td class="td-type">포심</td><td class="td-speed">145<span>km/h</span></td><td class="td-result ball">볼</td></tr>
-            <tr><td class="td-num">2</td><td class="td-type">슬라이더</td><td class="td-speed">129<span>km/h</span></td><td class="td-result ball">볼</td></tr>
-            <tr><td class="td-num">3</td><td class="td-type">포심</td><td class="td-speed">148<span>km/h</span></td><td class="td-result strike">스트라이크</td></tr>
-            <tr><td class="td-num">4</td><td class="td-type">체인지업</td><td class="td-speed">122<span>km/h</span></td><td class="td-result ball">볼</td></tr>
-            <tr><td class="td-num">5</td><td class="td-type">포심</td><td class="td-speed">147<span>km/h</span></td><td class="td-result ball">볼넷</td></tr>
-          </tbody>
-        </table>
-      </div>
+    <div class="pitch-row">
+      <div class="pitch-num">1구</div>
+      <div class="pitch-type">슬라이더</div>
+      <div class="pitch-speed">126<span>km/h</span></div>
+      <div class="pitch-sep">•</div>
+      <div class="pitch-result r-strike">스트라이크</div>
+    </div>
+    <div class="pitch-row">
+      <div class="pitch-num">2구</div>
+      <div class="pitch-type">슬라이더</div>
+      <div class="pitch-speed">126<span>km/h</span></div>
+      <div class="pitch-sep">•</div>
+      <div class="pitch-result r-contact">유격수 땅볼아웃</div>
     </div>
   </div>
 
-  <!-- ──────────── 타자 5: 김현수 ──────────── -->
-  <div class="batter-item" data-batter-id="b5" onclick="toggleBatter(this)">
-    <div class="batter-order">2</div>
-    <div class="batter-info">
-      <div class="batter-name-row">
-        김현수
-        <span class="batter-pos">지명타자</span>
-      </div>
-      <div class="batter-result-text">플라이아웃</div>
-    </div>
-    <div class="pitch-count-badge">3구</div>
-    <div class="batter-arrow">›</div>
-  </div>
-
-  <div class="pitch-panel" id="panel-b5">
-    <div class="pitch-panel-inner">
-      <div class="abs-wrapper">
-        <div class="abs-title">투구 위치</div>
-        <div class="abs-visual">
-          <div class="strike-zone" id="zone-b5">
-            <div class="zone-grid-h1"></div>
-            <div class="zone-grid-h2"></div>
-            <div class="zone-grid-v1"></div>
-            <div class="zone-grid-v2"></div>
-
-            <div class="pitch-dot dot-strike" style="left:50%; top:20%" data-tip="1구 포심 149km/h">1</div>
-            <div class="pitch-dot dot-ball"   style="left:50%; top:95%" data-tip="2구 커브 118km/h">2</div>
-            <div class="pitch-dot dot-contact" style="left:45%; top:25%" data-tip="3구 포심 150km/h">3</div>
-
-          </div>
-          <svg class="home-plate" viewBox="0 0 68 46" fill="none">
-            <polygon points="4,0 64,0 64,28 34,46 4,28"
-                     fill="rgba(255,255,255,0.05)"
-                     stroke="rgba(255,255,255,0.25)" stroke-width="1.5"/>
-          </svg>
-        </div>
-        <div class="abs-legend">
-          <div class="legend-row"><div class="legend-dot" style="background:#1e6ad4"></div>스트라이크</div>
-          <div class="legend-row"><div class="legend-dot" style="background:#1f8c42"></div>볼</div>
-          <div class="legend-row"><div class="legend-dot" style="background:#b07a10"></div>파울</div>
-          <div class="legend-row"><div class="legend-dot" style="background:#c00020"></div>타격</div>
-        </div>
-      </div>
-      <div class="pitch-table-wrap">
-        <table class="pitch-table">
-          <thead>
-            <tr><th>#</th><th>구종</th><th>구속</th><th>결과</th></tr>
-          </thead>
-          <tbody>
-            <tr><td class="td-num">1</td><td class="td-type">포심</td><td class="td-speed">149<span>km/h</span></td><td class="td-result strike">스트라이크</td></tr>
-            <tr><td class="td-num">2</td><td class="td-type">커브</td><td class="td-speed">118<span>km/h</span></td><td class="td-result ball">볼</td></tr>
-            <tr><td class="td-num">3</td><td class="td-type">포심</td><td class="td-speed">150<span>km/h</span></td><td class="td-result contact">플라이아웃</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-
-</div><!-- /batter-list -->
-
-<div style="height: 60px;"></div>
+</div>
+<div class="page-bottom"></div>
 
 <script>
-  // 타자 항목 클릭 → 투구 패널 열기/닫기
-  function toggleBatter(el) {
-    const id = el.getAttribute('data-batter-id');
+  function toggle(el) {
+    const id = el.getAttribute('data-id');
     const panel = document.getElementById('panel-' + id);
     const isOpen = el.classList.contains('active');
-
-    // 모두 닫기
     document.querySelectorAll('.batter-item').forEach(b => b.classList.remove('active'));
     document.querySelectorAll('.pitch-panel').forEach(p => p.classList.remove('open'));
-
-    // 이미 열려있던 거면 그냥 닫기, 아니면 열기
     if (!isOpen) {
       el.classList.add('active');
       panel.classList.add('open');
