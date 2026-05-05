@@ -213,7 +213,6 @@
       margin-left: 2px;
     }
 
-    /* 투구 구분자 */
     .pitch-sep {
       font-size: 11px;
       color: #3a3a3a;
@@ -223,11 +222,23 @@
     .pitch-result {
       font-size: 13px;
       font-weight: 700;
+      flex: 1;
     }
     .r-strike  { color: #f0c040; }
     .r-ball    { color: #5fdd8c; }
     .r-foul    { color: #f0a040; }
     .r-contact { color: #5b9aff; }
+
+    /* ── BALL COUNT ── */
+    .pitch-bs {
+      font-size: 11px;
+      font-weight: 400;
+      color: var(--muted);
+      letter-spacing: 0.02em;
+      flex-shrink: 0;
+      margin-left: 8px;
+      font-variant-numeric: tabular-nums;
+    }
 
     /* ── FOOTER ── */
     .page-bottom { height: 60px; }
@@ -284,18 +295,20 @@
     <div class="batter-order">3</div>
     <div class="batter-info">
       <div class="batter-name-row">윤동희 <span class="batter-pos">우익수</span></div>
-      <div class="batter-result-text">헛스윙 삼진</div>
+      <div class="batter-result-text">삼진 아웃</div>
     </div>
     <div class="pitch-count-badge">4구</div>
     <div class="batter-arrow">›</div>
   </div>
   <div class="pitch-panel" id="panel-b1">
+    <!-- 투구 전 카운트 기준 (해당 투구 던지기 전) -->
     <div class="pitch-row">
       <div class="pitch-num">1구</div>
       <div class="pitch-type">직구</div>
       <div class="pitch-speed">142<span>km/h</span></div>
       <div class="pitch-sep">•</div>
-      <div class="pitch-result r-strike">스트라이크</div>
+      <div class="pitch-result r-strike">헛스윙</div>
+      <div class="pitch-bs">0-1</div>
     </div>
     <div class="pitch-row">
       <div class="pitch-num">2구</div>
@@ -303,6 +316,7 @@
       <div class="pitch-speed">124<span>km/h</span></div>
       <div class="pitch-sep">•</div>
       <div class="pitch-result r-foul">파울</div>
+      <div class="pitch-bs">0-2</div>
     </div>
     <div class="pitch-row">
       <div class="pitch-num">3구</div>
@@ -310,13 +324,14 @@
       <div class="pitch-speed">144<span>km/h</span></div>
       <div class="pitch-sep">•</div>
       <div class="pitch-result r-ball">볼</div>
+      <div class="pitch-bs">1-2</div>
     </div>
     <div class="pitch-row">
       <div class="pitch-num">4구</div>
       <div class="pitch-type">직구</div>
       <div class="pitch-speed">142<span>km/h</span></div>
       <div class="pitch-sep">•</div>
-      <div class="pitch-result r-strike">헛스윙 삼진</div>
+      <div class="pitch-result r-strike">헛스윙</div>
     </div>
   </div>
 
@@ -337,6 +352,7 @@
       <div class="pitch-speed">125<span>km/h</span></div>
       <div class="pitch-sep">•</div>
       <div class="pitch-result r-foul">파울</div>
+      <div class="pitch-bs">0-1</div>
     </div>
     <div class="pitch-row">
       <div class="pitch-num">2구</div>
@@ -344,6 +360,7 @@
       <div class="pitch-speed">132<span>km/h</span></div>
       <div class="pitch-sep">•</div>
       <div class="pitch-result r-foul">파울</div>
+      <div class="pitch-bs">0-2</div>
     </div>
     <div class="pitch-row">
       <div class="pitch-num">3구</div>
@@ -351,13 +368,15 @@
       <div class="pitch-speed">141<span>km/h</span></div>
       <div class="pitch-sep">•</div>
       <div class="pitch-result r-ball">볼</div>
+      <div class="pitch-bs">1-2</div>
     </div>
     <div class="pitch-row">
       <div class="pitch-num">4구</div>
       <div class="pitch-type">체인지업</div>
-      <div class="pitch-speed">125<span>km/h</span></div>
+      <div class="pitch-speed">126<span>km/h</span></div>
       <div class="pitch-sep">•</div>
       <div class="pitch-result r-ball">볼</div>
+      <div class="pitch-bs">2-2</div>
     </div>
     <div class="pitch-row">
       <div class="pitch-num">5구</div>
@@ -365,6 +384,7 @@
       <div class="pitch-speed">126<span>km/h</span></div>
       <div class="pitch-sep">•</div>
       <div class="pitch-result r-foul">파울</div>
+      <div class="pitch-bs">2-2</div>
     </div>
     <div class="pitch-row">
       <div class="pitch-num">6구</div>
@@ -372,13 +392,14 @@
       <div class="pitch-speed">141<span>km/h</span></div>
       <div class="pitch-sep">•</div>
       <div class="pitch-result r-ball">볼</div>
+      <div class="pitch-bs">3-2</div>
     </div>
     <div class="pitch-row">
       <div class="pitch-num">7구</div>
       <div class="pitch-type">체인지업</div>
       <div class="pitch-speed">124<span>km/h</span></div>
       <div class="pitch-sep">•</div>
-      <div class="pitch-result r-contact">중견수 플라이 아웃</div>
+      <div class="pitch-result r-contact">타격</div>
     </div>
   </div>
 
@@ -387,7 +408,7 @@
     <div class="batter-order">5</div>
     <div class="batter-info">
       <div class="batter-name-row">노진혁 <span class="batter-pos">1루수</span></div>
-      <div class="batter-result-text">헛스윙 삼진</div>
+      <div class="batter-result-text">삼진 아웃</div>
     </div>
     <div class="pitch-count-badge">4구</div>
     <div class="batter-arrow">›</div>
@@ -399,6 +420,7 @@
       <div class="pitch-speed">130<span>km/h</span></div>
       <div class="pitch-sep">•</div>
       <div class="pitch-result r-strike">스트라이크</div>
+      <div class="pitch-bs">0-1</div>
     </div>
     <div class="pitch-row">
       <div class="pitch-num">2구</div>
@@ -406,6 +428,7 @@
       <div class="pitch-speed">131<span>km/h</span></div>
       <div class="pitch-sep">•</div>
       <div class="pitch-result r-strike">스트라이크</div>
+      <div class="pitch-bs">0-2</div>
     </div>
     <div class="pitch-row">
       <div class="pitch-num">3구</div>
@@ -413,17 +436,18 @@
       <div class="pitch-speed">132<span>km/h</span></div>
       <div class="pitch-sep">•</div>
       <div class="pitch-result r-ball">볼</div>
+      <div class="pitch-bs">1-2</div>
     </div>
     <div class="pitch-row">
       <div class="pitch-num">4구</div>
       <div class="pitch-type">직구</div>
       <div class="pitch-speed">144<span>km/h</span></div>
       <div class="pitch-sep">•</div>
-      <div class="pitch-result r-strike">헛스윙 삼진</div>
+      <div class="pitch-result r-strike">헛스윙</div>
     </div>
   </div>
 
-  <!-- ════ 타자 4: 유강남 ════ -->
+ <!-- ════ 타자 4: 유강남 ════ -->
   <div class="batter-item" data-id="b4" onclick="toggle(this)">
     <div class="batter-order">6</div>
     <div class="batter-info">
@@ -440,13 +464,14 @@
       <div class="pitch-speed">126<span>km/h</span></div>
       <div class="pitch-sep">•</div>
       <div class="pitch-result r-strike">스트라이크</div>
+      <div class="pitch-bs">0-1</div>
     </div>
     <div class="pitch-row">
       <div class="pitch-num">2구</div>
       <div class="pitch-type">슬라이더</div>
       <div class="pitch-speed">126<span>km/h</span></div>
       <div class="pitch-sep">•</div>
-      <div class="pitch-result r-contact">유격수 땅볼아웃</div>
+      <div class="pitch-result r-contact">타격</div>
     </div>
   </div>
 
