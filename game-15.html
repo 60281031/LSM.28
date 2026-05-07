@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>#28 이승민 — vs 한화 (05.01)</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #0d0d0d;
+      --border: #2a2a2a;
+      --text: #ffffff;
+      --muted: #888888;
+      --accent: #247EFF;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Noto Sans KR', sans-serif;
+      min-height: 100vh;
+    }
+
+    /* ── TOP BAR ── */
+    .topbar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: rgba(13,13,13,0.92);
+      backdrop-filter: blur(12px);
+      z-index: 50;
+    }
+    .back-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+      transition: color 0.15s;
+    }
+    .back-btn:hover { color: var(--text); }
+    .back-btn svg { width: 16px; height: 16px; }
+    .topbar-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+    }
+
+    /* ── GAME HEADER ── */
+    .game-header {
+      padding: 28px 24px 24px;
+      border-bottom: 1px solid var(--border);
+    }
+    .game-meta {
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      margin-bottom: 10px;
+    }
+    .game-title {
+      font-size: 36px;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .result-chip {
+      font-size: 20px;
+      font-weight: 700;
+    }
+    .chip-nd   { color: #888888; }
+    .chip-hold { color: #5BC8FF; }
+
+    .game-stats-row {
+      display: flex;
+      gap: 28px;
+      margin-top: 18px;
+    }
+    .gs-label {
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .gs-val { font-size: 20px; font-weight: 700; }
+
+    /* ── SECTION LABEL ── */
+    .section-label {
+      padding: 24px 24px 12px;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+
+    /* ── BATTER LIST ── */
+    .batter-list { display: flex; flex-direction: column; }
+
+    .batter-item {
+      display: flex;
+      align-items: center;
+      padding: 0 24px;
+      min-height: 64px;
+      border-top: 1px solid var(--border);
+      cursor: pointer;
+      transition: background 0.12s;
+      user-select: none;
+    }
+    .batter-item:last-child { border-bottom: 1px solid var(--border); }
+    .batter-item:hover { background: rgba(255,255,255,0.03); }
+    .batter-item.active {
+      background: rgba(255,255,255,0.04);
+      border-left: 2px solid var(--accent);
+    }
+
+    .batter-order {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--muted);
+      width: 22px;
+      flex-shrink: 0;
+    }
+    .batter-info { flex: 1; padding: 14px 12px 14px 8px; }
+    .batter-name-row {
+      font-size: 16px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .batter-pos { font-size: 11px; color: var(--muted); font-weight: 400; }
+    .batter-result-text { font-size: 12px; color: var(--muted); margin-top: 3px; }
+
+    .pitch-count-badge {
+      font-size: 11px;
+      color: var(--muted);
+      margin-right: 12px;
+      flex-shrink: 0;
+    }
+    .batter-arrow {
+      color: var(--muted);
+      font-size: 20px;
+      flex-shrink: 0;
+      transition: transform 0.15s, color 0.15s;
+    }
+    .batter-item.active .batter-arrow {
+      transform: rotate(90deg);
+      color: var(--text);
+    }
+
+    /* ── PITCH PANEL ── */
+    .pitch-panel {
+      display: none;
+      background: #111;
+      border-bottom: 1px solid var(--border);
+      padding: 4px 24px 16px 54px;
+      animation: expandDown 0.2s ease;
+    }
+    .pitch-panel.open { display: block; }
+    @keyframes expandDown {
+      from { opacity: 0; transform: translateY(-4px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── PITCH ROWS ── */
+    .pitch-row {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+    .pitch-row:last-child { border-bottom: none; }
+
+    .pitch-num {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--muted);
+      width: 28px;
+      flex-shrink: 0;
+    }
+    .pitch-type {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+      width: 80px;
+      flex-shrink: 0;
+    }
+    .pitch-speed {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+      width: 76px;
+      flex-shrink: 0;
+    }
+    .pitch-speed span {
+      font-size: 10px;
+      color: var(--muted);
+      font-weight: 400;
+      margin-left: 2px;
+    }
+
+    .pitch-sep {
+      font-size: 11px;
+      color: #3a3a3a;
+      margin-right: 10px;
+    }
+
+    .pitch-result {
+      font-size: 13px;
+      font-weight: 700;
+      flex: 1;
+    }
+    .r-strike  { color: #f0c040; }
+    .r-ball    { color: #5fdd8c; }
+    .r-foul    { color: #f0c040; }
+    .r-contact { color: #5b9aff; }
+
+    /* ── BALL COUNT ── */
+    .pitch-bs {
+      font-size: 11px;
+      font-weight: 400;
+      color: var(--muted);
+      letter-spacing: 0.02em;
+      flex-shrink: 0;
+      margin-left: 8px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* ── FOOTER ── */
+    .page-bottom { height: 60px; }
+
+    @media (max-width: 480px) {
+      .pitch-panel { padding-left: 36px; }
+      .pitch-type { width: 68px; }
+      .pitch-speed { width: 64px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <a href="index.html" class="back-btn">
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M10 3L5 8l5 5"/>
+    </svg>
+    Back
+  </a>
+  <div class="topbar-title">#28 이승민</div>
+</div>
+
+<!-- GAME HEADER -->
+<div class="game-header">
+  <div class="game-meta">2026. 5. 01. · 대구 · 대구삼성라이온즈파크</div>
+  <div class="game-title">
+    vs 한화
+    <span class="result-chip chip-hold">홀드</span>
+  </div>
+  <div class="game-stats-row">
+    <div class="gs-item">
+      <div class="gs-label">이닝</div>
+      <div class="gs-val">⅓</div>
+    </div>
+    <div class="gs-item">
+      <div class="gs-label">자책점</div>
+      <div class="gs-val">0</div>
+    </div>
+    <div class="gs-item">
+      <div class="gs-label">ERA</div>
+      <div class="gs-val">0.00</div>
+    </div>
+  </div>
+</div>
+
+<!-- BATTER LIST -->
+<div class="section-label">상대 타자</div>
+<div class="batter-list">
+
+  <!-- ════ 타자 1: 강백호 ════ -->
+  <div class="batter-item" data-id="b1" onclick="toggle(this)">
+    <div class="batter-order">4</div>
+    <div class="batter-info">
+      <div class="batter-name-row">강백호 <span class="batter-pos">DH</span></div>
+      <div class="batter-result-text">유격수 땅볼 아웃 (유격수->1루수 송구아웃)</div>
+    </div>
+    <div class="pitch-count-badge">2구</div>
+    <div class="batter-arrow">›</div>
+  </div>
+  <div class="pitch-panel" id="panel-b1">
+    <div class="pitch-row">
+      <div class="pitch-num">1구</div>
+      <div class="pitch-type">직구</div>
+      <div class="pitch-speed">142<span>km/h</span></div>
+      <div class="pitch-sep">•</div>
+      <div class="pitch-result r-strike">스트라이크</div>
+      <div class="pitch-bs">0-1</div>
+    </div>
+    <div class="pitch-row">
+      <div class="pitch-num">2구</div>
+      <div class="pitch-type">슬라이더</div>
+      <div class="pitch-speed">141<span>km/h</span></div>
+      <div class="pitch-sep">•</div>
+      <div class="pitch-result r-contact">타격</div>
+    </div>
+  </div>
+
+</div>
+<div class="page-bottom"></div>
+
+<script>
+  function toggle(el) {
+    const id = el.getAttribute('data-id');
+    const panel = document.getElementById('panel-' + id);
+    const isOpen = el.classList.contains('active');
+    document.querySelectorAll('.batter-item').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.pitch-panel').forEach(p => p.classList.remove('open'));
+    if (!isOpen) {
+      el.classList.add('active');
+      panel.classList.add('open');
+    }
+  }
+</script>
+</body>
+</html>
